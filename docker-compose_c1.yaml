@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  cli-chapter01:
+    build: .
+    image: gcc-core
+    volumes:
+      - ./Chap01:/app
+    tty: true
+    networks:
+      net-172.20.0.0:
+        ipv4_address: 172.20.0.100
+networks:
+      net-172.20.0.0:
+        name: net-172.20.0.0
+        ipam:
+            config:
+                - subnet: 172.20.0.0/24
