@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  cli-server:
+    build: .
+    image: gcc-core
+    volumes:
+      - ./tcp_server:/app
+    tty: true
+    networks:
+      net-172.20.0.0:
+        ipv4_address: 172.20.0.100
+    #command: tail -f /dev/null
+  cli-client:
+    build: .
+    image: gcc-core
+    volumes:
+      - ./tcp_client:/app
+    tty: true
+    networks:
+      net-172.20.0.0:
+        ipv4_address: 172.20.0.101
+    #command: tail -f /dev/null
+networks:
+      net-172.20.0.0:
+        name: net-172.20.0.0
+        ipam:
+            config:
+                - subnet: 172.20.0.0/24
