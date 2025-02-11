@@ -1,26 +1,34 @@
-version: '3.8'
 
 services:
-  cli-server:
+  server:
     build: .
     image: gcc-core
     volumes:
-      - ./tcp_server:/app
+      - ./Chap02/server/:/app
     tty: true
+    ports:
+      - 8080:8080
     networks:
       net-172.20.0.0:
         ipv4_address: 172.20.0.100
-    #command: tail -f /dev/null
-  cli-client:
+  client-1:
     build: .
     image: gcc-core
     volumes:
-      - ./tcp_client:/app
+      - ./Chap02/client:/app
     tty: true
     networks:
       net-172.20.0.0:
         ipv4_address: 172.20.0.101
-    #command: tail -f /dev/null
+  client-2:
+    build: .
+    image: gcc-core
+    volumes:
+      - ./Chap02/client:/app
+    tty: true
+    networks:
+      net-172.20.0.0:
+        ipv4_address: 172.20.0.102
 networks:
       net-172.20.0.0:
         name: net-172.20.0.0
