@@ -36,10 +36,7 @@ int main() {
     
         buffer[strcspn(buffer, "\n")] = 0; // Remove trailing newline from fgets
 
-        if (strcmp(buffer, "exit") == 0) {
-            puts("Exiting...");
-            break;
-        }
+        
         // Send data to server
         n = sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr *)&server_addr, sizeof(server_addr));
         if (n < 0) {
@@ -47,6 +44,10 @@ int main() {
             continue;
         }
 
+        if (strcmp(buffer, "exit") == 0) {
+            puts("Exiting...");
+            break;
+        }
         // Receive data from server
         n = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, NULL, NULL); // We don't need the server address again
         if (n < 0) {
