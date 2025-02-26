@@ -128,7 +128,7 @@ void *handle_request(void *arg) {
                         strlen(response_json),
                         response_json);
                 write(client_socket, response, strlen(response));
-            }
+            }.
         }
     }
     close(client_socket);
