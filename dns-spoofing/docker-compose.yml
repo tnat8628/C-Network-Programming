@@ -1,0 +1,35 @@
+services:
+  client:
+    build: ./client
+    container_name: dns-client
+    tty: true
+    volumes:
+      - ./client:/app
+    networks:
+      dns-network:
+        ipv4_address: 172.20.0.2
+    dns: 172.20.0.3
+    depends_on:
+      - forwarder
+
+  forwarder:
+    build: ./forwarder
+    container_name: dns-forwarder
+    tty: true
+    volumes:
+      - ./forwarder:/app    
+    networks:
+      dns-network:
+        ipv4_address: 172.20.0.3
+    cap_add:
+      - NET_ADMIN  # Required for raw socket operations
+    # ports:       # Uncomment to expose externally
+    #   - "53:53/udp"
+
+networks:
+  dns-network:
+    name: dns-network
+#    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
