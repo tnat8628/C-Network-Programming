@@ -1,21 +1,32 @@
-# docker-compose.yml
 version: '3.8'
 
 services:
   ssh-server:
     build:
       context: ./ssh_server
-    image: ssh_client_img
+    image: ssh_server_img
     container_name: ssh_server
     tty: true
-  ssh-client: 
+    networks:
+      - ssh_network
+
+  ssh-client:
     build:
       context: ./ssh_client
-    image: ssh_server_img
-    container_name: ssh_client 
-    volumes: 
-        - ./ssh_client:/app
+    image: ssh_client_img
+    container_name: ssh_client
+    volumes:
+      - ssh_data:/app  # Consider using a named volume if persistence is needed
     depends_on:
       - ssh-server
-    stdin_open: true  
-    tty: true        
+    stdin_open: true
+    tty: true
+    networks:
+      - ssh_network
+
+volumes:
+  ssh_data:  # Optional: only if you need persistent data
+
+networks:
+  ssh_network:
+    driver: bridge
