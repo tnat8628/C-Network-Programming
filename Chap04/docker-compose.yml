@@ -1,0 +1,29 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  https-server:
+    build:
+      context: ./https_server
+    image: tls_server_img
+    container_name: https_server
+    volumes: 
+      - ./https_server:/app
+    ports:
+      - 9443:9443
+    tty: true
+    cap_add:
+      - ALL
+  tls-client: 
+    build:
+      context: ./client
+    image: tls_client_img
+    container_name: client 
+    volumes: 
+        - ./client:/app
+    depends_on:
+      - https-server
+    stdin_open: true  
+    tty: true
+    cap_add:
+      - ALL        
