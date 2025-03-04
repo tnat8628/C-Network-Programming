@@ -11,6 +11,7 @@ int main() {
     char buffer[256];
     int nbytes;
     char command[256];
+    ssh_key public_key;
 
     my_ssh_session = ssh_new();
     if (my_ssh_session == NULL) {
@@ -21,6 +22,7 @@ int main() {
     ssh_options_set(my_ssh_session, SSH_OPTIONS_HOST, "172.19.0.2"); //Modify this ip
     ssh_options_set(my_ssh_session, SSH_OPTIONS_PORT, &(int){22}); 
     ssh_options_set(my_ssh_session, SSH_OPTIONS_USER, "seed");
+    ssh_options_set(my_ssh_session, SSH_OPTIONS_IDENTITY, "~/.ssh/id_rsa_key"); //Use SSH Key
 
     rc = ssh_connect(my_ssh_session);
     if (rc != SSH_OK) {
@@ -29,9 +31,20 @@ int main() {
         exit(-1);
     }
 
-    rc = ssh_userauth_password(my_ssh_session, NULL, "dees");
+    //Load public key
+    rc = ssh_pki_import_pubkey_file("~/.ssh/id_rsa_key.pub", &public_key);
+    if (rc != SSH_OK) {
+        fprintf(stderr, "Error loading public key: %s\n", ssh_get_error(my_ssh_session));
+        ssh_disconnect(my_ssh_session);
+        ssh_free(my_ssh_session);
+        exit(-1);
+    }
+
+    //Authen
+    rc = ssh_userauth_password(my_ssh_session, NULL, public_key);
     if (rc != SSH_AUTH_SUCCESS) {
         fprintf(stderr, "Error authenticating: %s\n", ssh_get_error(my_ssh_session));
+        ssh_key_free(public_key);
         ssh_disconnect(my_ssh_session);
         ssh_free(my_ssh_session);
         exit(-1);
@@ -82,7 +95,7 @@ int main() {
     
     printf("Interactive shell started. Type commands or 'exit' to quit.\n");
     
-  
+    //Close connect
     ssh_disconnect(my_ssh_session);
     ssh_free(my_ssh_session);
 
