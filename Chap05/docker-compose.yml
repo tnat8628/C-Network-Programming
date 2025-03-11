@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  host1:
+    build: .
+    container_name: host1
+    networks:
+      - pynetwork
+    volumes:
+      - ./host1:/app
+    tty: true
+  host2:
+    build: .
+    container_name: host2
+    networks:
+      - pynetwork
+    volumes:
+      - ./host2:/app
+    tty: true
+networks:
+  pynetwork:
+    driver: bridge
