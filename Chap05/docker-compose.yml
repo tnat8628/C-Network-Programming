@@ -8,6 +8,8 @@ services:
       - pynetwork
     volumes:
       - ./host1:/app
+    dns:
+      - 8.8.8.8
     tty: true
   host2:
     build: .
@@ -16,6 +18,8 @@ services:
       - pynetwork
     volumes:
       - ./host2:/app
+    dns:
+      - 8.8.8.8
     tty: true
 networks:
   pynetwork:
