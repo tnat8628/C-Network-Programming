@@ -1,5 +1,7 @@
-01 - Simple Question-Answer
-02 - Workflow (dummy_tool)
+| Python script | Brief description| 
+|---------------|------------------|
+|01-Simple.py| Question-Answer|
+|02-Workflow.py| dummy_tool|
 03 - Workflow (GoogleCalendarTool)
 04 - Workflow (GoogleCalendarTool + GetWeatherTool)
 05 - Agent with toolcall
