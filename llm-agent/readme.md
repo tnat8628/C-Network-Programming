@@ -1,4 +1,4 @@
-| Python script | Brief description| 
+| Python scripts | Brief description| 
 |---------------|------------------|
 |01-simple.py| Question-Answer|
 |02-workflow.py| dummy_tool|
