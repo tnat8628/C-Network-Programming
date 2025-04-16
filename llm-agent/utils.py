@@ -1,5 +1,5 @@
-from smolagents import LiteLLMModel, tool
-from smolagents.agents import CodeAgent, Tool
+from smolagents import Tool, tool
+
 class NetworkTools(Tool):
     name = "network_tools"
     description = "Tools for network discovery and topology mapping using ping3"
