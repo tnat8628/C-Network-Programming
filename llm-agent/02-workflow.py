@@ -7,13 +7,13 @@ import os
 from rich import print
 
 load_dotenv()
-api_key = os.environ["GROQ_API_KEY"]
-os.environ["OPENAI_API_KEY"] = api_key
+api_key = os.environ["OPENAI_API_KEY"]
+#os.environ["OPENAI_API_KEY"] = api_key
 
 llm = ChatLiteLLM(
-    model="groq/llama3-8b-8192",
+    model="openai/gpt-4o-mini",
     #api_key=api_key,
-    api_base="https://api.groq.com/openai/v1",
+    #api_base="https://api.groq.com/openai/v1",
 )
 @tool
 def dummy_tool(query: str) -> str:
