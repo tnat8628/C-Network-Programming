@@ -22,7 +22,7 @@ llm_model = LiteLLMModel(
 )
 agent = CodeAgent(tools=[DuckDuckGoSearchTool()], 
                   model=llm_model,
-                  verbosity_level=3,
+                  verbosity_level=2,
                 )
 query = """
 How long would it take for a puma to cross the united states from florida to california?
