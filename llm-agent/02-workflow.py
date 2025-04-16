@@ -7,19 +7,18 @@ import os
 from rich import print
 
 load_dotenv()
-
 api_key = os.environ["GROQ_API_KEY"]
+os.environ["OPENAI_API_KEY"] = api_key
 
 llm = ChatLiteLLM(
     model="groq/llama3-8b-8192",
-    api_key=api_key,
+    #api_key=api_key,
+    api_base="https://api.groq.com/openai/v1",
 )
-
 @tool
 def dummy_tool(query: str) -> str:
     """A dummy tool that just echoes the input"""
     return f"I received: {query}"
-
 
 
 #Initialize the agent
